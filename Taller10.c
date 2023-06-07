@@ -60,7 +60,7 @@ int suma(int x, int y) {
     return x + y;
 }
 typedef int (*fn) (int);
-
+  
 List depuraLista(List list, fn f){
   if(list == NULL){
     return NULL;

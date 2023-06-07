@@ -1,6 +1,7 @@
 #include "TAD.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 
 typedef struct Complex{
   int real;
@@ -63,3 +64,61 @@ ComplejoADT divideComp(ComplejoADT n1, ComplejoADT n2){
 void liberaComp(ComplejoADT n){
   free(n);
 }
+
+//-----------------------------------------------
+
+typedef struct node {
+    elemType head;
+    struct node * tail;
+} node;
+
+typedef node * TList;
+
+struct listCDT {
+    TList first;    // puntero al primer nodo
+    size_t size;    // cantidad de elementos en la lista
+    compare cmp;
+};
+
+listADT newList(compare cmp) {
+    listADT aux = malloc(sizeof(struct listCDT));
+    aux->size = 0;
+    aux->first = NULL;  // la lista está vacía
+    aux->cmp = cmp;
+    return aux;
+}
+
+static void freeListRec(TList list) {
+    if (list==NULL) {
+        return;
+    }
+    freeListRec(list->tail);
+    free(list);
+}
+
+void freeList(listADT list) {
+    freeListRec(list->first);
+    free(list);
+}
+
+int isEmptyList(const listADT list) {
+    return list->first == NULL;
+}
+
+size_t sizeList(const listADT list) {
+    return list->size;
+}
+
+int belongsList(const listADT list, elemType elem) {
+    TList aux = list->first;
+    while( aux != NULL && list->cmp(aux->head, elem) <=0) {
+        // cmp retorna 0 si son iguales (como strcmp)
+        if ( !list->cmp(aux->head, elem)) {
+            return 1;
+        }
+        aux = aux->tail;
+    }
+    return 0;
+}
+
+
