@@ -18,10 +18,11 @@ int main(void) {
 	addElement( set2, "carlos" );
 	addElement( set2, "daniel" );
 	addElement( set2, "emilia" ); // set2 = {"carlos", "daniel", "emilia"}
-	/*
+
   ans = unionSet( set1, set2 ); 
 	assert( setContains(ans, "amelia") && setContains(ans, "daniel"));
 	freeSet(ans);
+
 
 	ans = intersectionSet( set1, set2 );
 	assert( setContains(ans, "carlos") && setContains(ans, "amelia") == 0 );
@@ -32,7 +33,10 @@ int main(void) {
 	freeSet(ans);
 
 	deleteElement( set1, "carlos" );
+  PrintSet(set1);
+  PrintSet(set2);
 	ans = intersectionSet(set1, set2);
+  PrintSet(ans);
 	assert( isEmptySet(ans) );
 
 	freeSet(set1);
@@ -63,6 +67,6 @@ int main(void) {
     freeSet(ans);
     freeSet(set1);
 	freeSet(set2);
-	*/
+	
 	puts("OK!");
 }
