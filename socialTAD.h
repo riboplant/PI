@@ -1,6 +1,7 @@
 #ifndef __SOCIALTAD_H
 #define __SOCIALTAD_H
 
+typedef char elemType[20]; 
 typedef struct socialCDT * socialADT;
  
 /* Crea un nuevo TAD vacío */

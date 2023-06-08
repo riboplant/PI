@@ -3,21 +3,81 @@
 #include <stdio.h>
 #include <string.h>
 
+
+typedef struct Relaciones{
+  elemType name;
+  struct Relaciones* tail;
+} Relaciones;
+typedef struct Relaciones* ListRel;
+
+
 typedef struct socialCDT{
-
-  //llenar
-
+  elemType persona;
+  ListRel allegados;
+  struct socialCDT* siguiente;
+  size_t size;
 } socialCDT;
 
-socialADT newSocial();
+socialADT newSocial(){
+  return NULL;
+}
  
-/* Libera todos los recursos reservados por el TAD */
-void freeSocial(socialADT soc);
+static void freeRels(ListRel list){
+  if(list == NULL){
+    return;
+  }
+  freeRels(list->tail);
+  free(list);
+}
+
+void freeSocial(socialADT soc){
+  if(soc == NULL){
+    return;
+  }
+  free(soc->siguiente);
+  freeRels(soc->allegados);
+  free(soc);
+}
  
 /* Almacena una nueva persona. Si la persona existe, no hace nada
 ** Guarda una copia del nombre, no simplemente el puntero
 */
-void addPerson(socialADT soc, const char * name);
+
+static int relBelongs(ListRel list, const char* name){
+  if(list == NULL){
+    return 0;
+  }
+  if(strcmp(list->name, name) == 0){
+    return 1;
+  }
+  return relBelongs(list->tail, name);
+}
+
+static int socBelongs(socialADT soc, const char* name){
+  if(soc == NULL){
+    return 0;
+  }
+  if(strcmp(soc->persona, name) == 0){
+    return 1;
+  }
+  return socBelongs(soc->siguiente, name);
+}
+
+void addPerson(socialADT soc, const char * name){
+  if(soc == NULL){
+    soc = malloc(sizeof(socialCDT));
+    strcpy(soc->persona, name);
+    soc->size = 1;
+    soc->siguiente = NULL;
+    soc->allegados = NULL;
+    return soc;
+  }
+  if(strcmp(soc->persona, name) == 0){
+    return;
+  }
+  soc->siguiente = socBelongs(soc->siguiente, name);
+  return;
+}
 
 /* Si existe una persona con ese nombre, agrega la nueva relación
 ** Si la persona no existe, no hace nada
@@ -25,7 +85,23 @@ void addPerson(socialADT soc, const char * name);
 ** Almacena una copia de related, no simplemente el puntero
 **
  */
-void addRelated(socialADT soc, const char * name, const char * related);
+
+void addRelRec(ListRel list, elemType elem){
+  if(list == NULL || strcmp(list->name, elem) == )
+
+
+}
+
+
+
+void addRelated(socialADT soc, const char * name, const char * related){
+  if(!socBelongs(soc, name)){
+    return;
+  }
+
+  addRelRec(soc, related);
+
+}
 
 /* Retorna una copia de los nombres relacionados con una persona
 ** en orden alfabético.
