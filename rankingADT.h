@@ -4,14 +4,14 @@
 #include <stdlib.h>
 
 typedef char* elemType;
-typedef int (*compare)(elemType, elemType);
+typedef int (*comp)(elemType, elemType);
 typedef struct rankingCDT * rankingADT;
 
 /* Crea un nuevo ranking. Recibe un vector con elementos, donde el primer
 ** elemento (elems[0]) está al tope del ranking (puesto 1), elems[1] en el 
 ** puesto 2, etc. Si dim es cero significa que no hay elementos iniciales
 */
-rankingADT newRanking(elemType elems[], size_t dim, compare comp);
+rankingADT newRanking(elemType elems[], size_t dim, comp cmp);
 
 /* Agrega un elemento en la posición más baja del ranking, si no estaba.
 ** Si el elemento estaba, es equivalente a accederlo, por lo que sube un 
@@ -45,5 +45,7 @@ int contains(rankingADT ranking, elemType elem);
 void downByRanking(rankingADT ranking, size_t n);
 
 void freeRanking(rankingADT r);
+
+void PrintRanking(rankingADT ranking);
 
 #endif
